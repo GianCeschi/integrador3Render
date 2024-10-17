@@ -1,5 +1,5 @@
 # Etapa de construcción (Build Stage)
-FROM maven:3.9.0-amazoncorretto-21 AS build
+FROM amazoncorretto:21-alpine-jdk AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
