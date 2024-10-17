@@ -9,10 +9,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgresSQLDialect
 
 
   application:
-    name: integrador3Render
+    name: integrador3render
 server:
   port: 8080
