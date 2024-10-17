@@ -1,24 +1,11 @@
-
-# Fase 1: Construir el proyecto con Maven
-FROM maven:3.9.6-amazoncorretto-21 AS build
+# Etapa de construcción (Build Stage)
+FROM maven:3.8.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Copiar el código fuente al contenedor
-COPY target/Grupo20Integrador3-0.0.1-SNAPSHOT.jar app.jar
-
-# Ejecutar la construcción de Maven (skipTests para evitar ejecutar tests)
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Fase 2: Crear la imagen final
-FROM amazoncorretto:21-alpine
+# Etapa final (Final Stage)
+FROM amazoncorretto:17-alpine-jdk
 WORKDIR /app
-
-# Copiar el JAR generado en la fase de construcción al contenedor final
-COPY --from=build /app/target/mi-app.jar /app/mi-app.jar
-
-# Exponer el puerto si aplica
-EXPOSE 8080
-
-# Ejecutar la aplicación Java
-ENTRYPOINT ["java", "-jar", "/app/mi-app.jar"]
-
+COPY --from=build /app/target/Grupo20Integrador3-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--debug"]
